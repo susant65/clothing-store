@@ -1,31 +1,381 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Our Products</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Products | Clothing Store</title>
+
+  <!-- Google Fonts + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #f4f6f9;
+      color: #222;
+      padding: 30px 15px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    nav {
+      background: #ffffff;
+      padding: 15px 30px;
+      border-radius: 12px;
+      max-width: 1000px;
+      margin: 0 auto 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    nav .logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #222;
+    }
+
+    nav a {
+      color: #007bff;
+      text-decoration: none;
+      margin-left: 25px;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #0056b3;
+    }
+
+    /* Dark mode toggle button */
+    #darkModeToggle {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #007bff;
+      transition: color 0.3s ease;
+      margin-left: 25px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.4rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+      transition: color 0.3s;
+    }
+
+    .search-container {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .search-input {
+      width: 300px;
+      max-width: 90%;
+      padding: 12px 20px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 30px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+    }
+
+    .search-input:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .product-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      padding: 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s, color 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 220px;
+      object-fit: contain;
+      margin-bottom: 15px;
+      border-radius: 12px;
+      transition: filter 0.3s;
+    }
+
+    .product-name {
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+    }
+
+    .product-price {
+      color: #28a745;
+      font-weight: 600;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+      transition: color 0.3s;
+    }
+
+    .product-description {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 10px;
+      transition: color 0.3s;
+    }
+
+    .stars {
+      color: #f1c40f;
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+      transition: color 0.3s;
+    }
+
+    .buy-btn {
+      background-color: #25D366;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 1rem;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-top: auto;
+    }
+
+    .buy-btn:hover {
+      background-color: #1ebe57;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 80px;
+      font-size: 0.95rem;
+      color: #444;
+      transition: color 0.3s;
+    }
+
+    footer a {
+      color: #007bff;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      .product-image {
+        height: 160px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      .buy-btn {
+        font-size: 0.9rem;
+      }
+    }
+
+    /* DARK MODE STYLES */
+    body.dark-mode {
+      background-color: #121212;
+      color: #ddd;
+    }
+
+    body.dark-mode nav {
+      background: #1e1e1e;
+      box-shadow: 0 3px 10px rgba(255, 255, 255, 0.07);
+    }
+
+    body.dark-mode nav .logo {
+      color: #eee;
+    }
+
+    body.dark-mode nav a {
+      color: #66aaff;
+    }
+
+    body.dark-mode nav a:hover {
+      color: #99cfff;
+    }
+
+    body.dark-mode #darkModeToggle {
+      color: #66aaff;
+    }
+
+    body.dark-mode h1 {
+      color: #eee;
+    }
+
+    body.dark-mode .search-input {
+      background-color: #333;
+      border-color: #555;
+      color: #eee;
+      box-shadow: none;
+    }
+
+    body.dark-mode .product-card {
+      background-color: #222;
+      box-shadow: 0 8px 20px rgba(255, 255, 255, 0.05);
+      color: #ddd;
+    }
+
+    body.dark-mode .product-image {
+      filter: brightness(0.9);
+    }
+
+    body.dark-mode .product-price {
+      color: #4cd137;
+    }
+
+    body.dark-mode .product-description {
+      color: #bbb;
+    }
+
+    body.dark-mode .stars {
+      color: #f1c40f;
+    }
+
+    body.dark-mode .buy-btn {
+      background-color: #128C7E;
+    }
+
+    body.dark-mode .buy-btn:hover {
+      background-color: #0b6a5a;
+    }
+
+    body.dark-mode footer {
+      color: #aaa;
+    }
+
+    body.dark-mode footer a {
+      color: #66aaff;
+    }
+
+  </style>
 </head>
 <body>
-  <h1>Our Products</h1>
+
   <nav>
-    <a href="index.html">Home</a> |
-    <a href="products.html">Products</a> |
-    <a href="#">Contact</a>
+    <div class="logo">Clothing Store</div>
+    <div>
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="contact.html">Contact</a>
+      <button id="darkModeToggle" aria-label="Toggle Dark Mode" title="Toggle Dark Mode">🌙</button>
+    </div>
   </nav>
 
-  <div class="product-container">
-    <div class="product">
-      <img src="shirt1.jpg.jpg" alt="Brown Shirt With Palm Tree" />
-      <h3>Brown Shirt</h3>
-      <p>Price: Rs. 599</p>
-      <a href="https://wa.me/9779749245261?text=I'm%20interested%20in%20Brown%20Shirt" target="_blank" class="order-btn">Order on WhatsApp</a>
+  <h1>Our Products</h1>
+
+  <div class="search-container">
+    <input type="text" placeholder="Search products..." class="search-input" id="searchInput" onkeyup="filterProducts()" />
+  </div>
+
+  <div class="products-grid" id="productsGrid">
+    <!-- Product 1 -->
+    <div class="product-card">
+      <img src="images/shirt1.jpg" alt="Brown Shirt" class="product-image" loading="lazy" />
+      <div class="product-name">Brown Shirt</div>
+      <div class="product-price">Rs. 599</div>
+      <div class="product-description">
+        Lightweight and comfortable cotton shirt for casual wear.
+      </div>
+      <div class="stars">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="far fa-star"></i>
+      </div>
+      <button class="buy-btn" onclick="buyOnWhatsApp('Brown Shirt', 599)">Buy Now on WhatsApp</button>
     </div>
 
-    <div class="product">
-      <img src="jeans1.jpg.avif" alt="Cargo Denim Jeans" />
-      <h3>Denim Jeans</h3>
-      <p>Price: Rs. 999</p>
-      <a href="https://wa.me/9779749245261?text=I'm%20interested%20in%20Denim%20Jeans" target="_blank" class="order-btn">Order on WhatsApp</a>
+    <!-- Product 2 -->
+    <div class="product-card">
+      <img src="images/jeans1.avif" alt="Denim Jeans" class="product-image" loading="lazy" />
+      <div class="product-name">Denim Jeans</div>
+      <div class="product-price">Rs. 999</div>
+      <div class="product-description">
+        Durable and stylish denim jeans, perfect for everyday use.
+      </div>
+      <div class="stars">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star-half-alt"></i>
+      </div>
+      <button class="buy-btn" onclick="buyOnWhatsApp('Denim Jeans', 999)">Buy Now on WhatsApp</button>
     </div>
   </div>
+
+  <footer>
+    Contact us at 
+    <a href="mailto:susantlimbu65@gmail.com">susantlimbu65@gmail.com</a> | 
+    Phone: <a href="tel:+9779749245261">+977 9749245261</a>
+  </footer>
+
+  <script>
+    function filterProducts() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const products = document.querySelectorAll('.product-card');
+
+      products.forEach(product => {
+        const name = product.querySelector('.product-name').textContent.toLowerCase();
+        product.style.display = name.includes(input) ? 'flex' : 'none';
+      });
+    }
+
+    function buyOnWhatsApp(product, price) {
+      const phoneNumber = '9779749245261';
+      const message = `Hello, I am interested in buying the ${product} priced at Rs. ${price}. Please provide more details.`;
+      const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+    }
+
+    // Dark Mode Toggle
+    const toggleBtn = document.getElementById('darkModeToggle');
+    toggleBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+
+      // Toggle icon: moon <-> sun
+      if (document.body.classList.contains('dark-mode')) {
+        toggleBtn.textContent = '☀️';
+      } else {
+        toggleBtn.textContent = '🌙';
+      }
+    });
+  </script>
+
 </body>
 </html>
